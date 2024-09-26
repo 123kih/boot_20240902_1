@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- BoardMapper.java와 같은 구조-->
+<mapper namespace="com.example.mapper.BoardMapper">
+
+    
+    <update id="updateBoardHit" parameterType="int">
+        UPDATE board SET hit = hit + 1 WHERE no = #{no}
+    </update>
+
+    <select id="selectBoardOne" resultType="com.example.entity.Board">
+        SELECT * FROM board WHERE no= #{no}
+    </select>
+
+    <select id="selectBoardList" resultType="com.example.entity.Board">
+        SELECT no, title, content, writer, hit, regdate FROM board;
+    </select>
+    
+    <insert id="insertBoardOne" parameterType="com.example.entity.Board">
+        INSERT INTO board(  title , content , writer )
+        VALUES(#{title} , #{content} , #{writer})
+    </insert>
+
+</mapper>

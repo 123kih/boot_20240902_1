@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>판매자 홈</h3>
+    <hr>
+    <span th:text="|${user.username}님 로그인|"></span>
+    <a th:href="@{/seller/home.do(menu=1)}"><button>물품관리</button></a>
+    <a th:href="@{/seller/home.do(menu=2)}"><button>주문관리</button></a>
+    <a th:href="@{/seller/home.do(menu=3)}"><button>회원관리</button></a>
+    <form th:action="@{/logout.do}" method="post" style="display: inline-block;">
+        <button type="submit">로그아웃</button>
+    </form>
+    <hr>
+
+    <div th:if="${#strings.toString(param.menu) == '1'}">
+        <form th:action="@{/seller/item1insert.do}" method="post">
+            <input type="text" name="name" placeholder="name"/>
+            <input type="text" name="content" placeholder="content"/>
+            <input type="number" name="price" placeholder="price"/>
+            <input type="number" name="quantity" placeholder="quantity"/>
+            <input type="submit" value="물품등록"/>
+        </form>
+
+        <div>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>물품명</th>
+                        <th>물품내용</th>
+                        <th>가격</th>
+                        <th>수량</th>
+                        <th>등록일</th>
+                        <th>버튼</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="obj : ${list}">
+                        <td th:text="${obj.no}"></td>
+                        <td th:text="${obj.name}"></td>
+                        <td th:text="${obj.content}"></td>
+                        <td th:text="${obj.price}"></td>
+                        <td th:text="${obj.quantity}"></td>
+                        <td th:text="${obj.regdate}"></td>
+                        <td>
+                            <button>변경</button>
+                            <button>삭제</button>
+                            <a th:href="@{/seller/item1imageinsert.do(no=${obj.no})}"><button>이미지추가</button></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div th:if="${#strings.toString(param.menu) == '2'}">
+        2
+    </div>
+
+    <div th:if="${#strings.toString(param.menu) == '3'}">
+        3
+    </div>
+</body>
+</html>

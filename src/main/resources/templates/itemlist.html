@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>물품목록</h3>
+    <table>
+        <thead>
+            <th>번호</th>
+            <th>이름</th>
+            <th>가격</th>
+            <th>개수</th>
+            <th>내용</th>
+            <th>날짜</th>
+            <th>이미지</th>
+        </thead>
+
+        <tbody>
+            <tr th:each="obj : ${list}">
+                <td th:text="${obj.no}"></td>
+                <td>
+                    <a th:href="@{/seller/itemlist.do(no=${obj.no})}" th:text="${obj.name}"></a>
+                </td>
+                <td th:text="${obj.price}"></td>
+                <td th:text="${obj.qty}"></td>
+                <td th:text="${obj.content}"></td>
+                <td th:text="${obj.regdate}"></td>
+                <td><a th:href="@{/seller/itemimageinsert.do(itemno=${obj.no})}"><button>이미지등록</button></a></td>
+            </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/seller/iteminsert.do}"><button>물품등록</button></a>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>고객용 회원가입</h3>
+
+    <form th:action="@{/customer/joinaction.do}" method="post">
+        <input type="text" placeholder="id" name="id"/> <br/>
+        <input type="text" placeholder="pw" name="pw"/> <br/>
+        <input type="text" placeholder="name" name="name"/> <br/>
+        <input type="text" placeholder="phone" name="phone"/> <br/>
+        <input type="text" placeholder="age" name="age"/> <br/>
+        <input type="hidden" name="role" value="CUSTOMER"> <br/>
+        <button type="submit">고객회원가입</button>
+        <input type="submit" value="고객회원가입"/>
+    </form>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>member1 홈화면</h3>
+
+    <a th:href="@{/member1/list.do}">회원목록</a>
+
+    <div th:if="${session.login==null}">
+        <a th:href="@{/member1/join.do}">회원가입</a>
+        <a th:href="@{/member1/login.do}">로그인</a>
+    </div>
+
+    <div th:if="${session.login != null}">
+        <span th:text="${session.loginid}"></span>님 로그인
+        <form th:action="@{/member1/logout.do}" method="post">
+            <input type="submit" value="로그아웃"/>
+        </form>
+    </div>
+</body>
+</html> 

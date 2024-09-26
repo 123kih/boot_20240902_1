@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시판내용</title>
+</head>
+<body>
+    <h3>게시판내용</h3>
+
+    <p th:text="${obj.no}"></p>
+    <p th:text="${obj.title}"></p>
+    <p th:text="${obj.content}"></p>
+    <p th:text="${obj.writer}"></p>
+    <p th:text="${obj.hit}"></p>
+    <p th:text="${obj.regdate}"></p>
+    <form th:action="@{/board/delete.do}" method="post" >
+        <input type="hidden" th:value="${obj.no}" name="no"/>
+        <button type="submit">삭제</button>
+    </form>
+
+    <a th:href="@{/board/update.do(no=${obj.no})}"><button>변경화면으로 이동</button></a>
+
+    <a th:href="@{/board/list.do}" th:text="목록으로"></a>
+</body>
+</html>

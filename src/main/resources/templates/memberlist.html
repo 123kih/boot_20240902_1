@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>회원목록</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>아이디</th>
+                <th>암호</th>
+                <th>나이</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="obj : ${list}">
+                <td th:text="${obj.userid}"></td>
+                <td th:text="${obj.userpw}"></td>
+                <td th:text="${obj.userage}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

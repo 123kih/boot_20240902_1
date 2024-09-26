@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>홈화면</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+</head>
+<body>
+    <h3>홈화면</h3>
+    <hr>
+    <p>고객용은 html로 구현하지 않음. react로 연동</p>
+    <hr>
+
+    <a th:href="@{/login.do}"><button>판매자로그인</button></a>
+    <a th:href="@{/sellerjoin.do}"><button>판매자회원가입</button></a>
+    <form th:action="@{/logout.do}" method="post" style="display: inline-block;">
+        <input type="submit" value="판매자로그아웃"/>
+    </form>
+    <hr>
+    
+    <a th:href="@{/login.do}"><button>관리자로그인</button></a>
+    <a th:href="@{/adminjoin.do}"><button>관리자회원가입</button></a>
+    <form th:action="@{/logout.do}" method="post" style="display: inline-block;">
+        <input type="submit" value="판매자로그아웃"/>
+    </form>
+</body>
+</html>

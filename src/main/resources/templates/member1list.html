@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>회원목록</h3>
+    <table border="1">
+        <tbody>
+            <tr th:each="obj: ${list}">
+                <td th:text="${obj.id}"></td>
+                <td th:text="${obj.pw}"></td>
+                <td th:text="${obj.name}"></td>
+                <td th:text="${obj.age}"></td>
+                <td th:text="${obj.phone}"></td>
+                <td th:text="${obj.regdate}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

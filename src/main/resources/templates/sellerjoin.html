@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>판매자 회원가입</title>
+</head>
+<body>
+    <h3>판매자 회원가입</h3>
+
+    <form th:action="@{/sellerjoinaction.do}" method="post">
+
+        <input type="text" name="id" placeholder="id"><br/>
+        <input type="text" name="pw" placeholder="pw"><br/>
+        <input type="text" name="name" placeholder="name"><br/>
+        <input type="text" name="phone" placeholder="phone"><br/>
+        <input type="number" name="age" placeholder="age"><br/>
+        <select name="role">
+            <option value="SELLER">SELLER</option>
+        </select><br>
+        
+        <input type="submit" value="판매자회원가입"><br/>
+
+    </form>
+</body>
+</html>

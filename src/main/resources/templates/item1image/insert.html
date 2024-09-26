@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>물품 이미지 등록</h3>
+    <a th:href="@{/seller/home.do(menu=1)}">목록으로</a>
+    <form th:action="@{/seller/item1imageinsertone.do}" method="post" enctype="multipart/form-data">
+        <input type="text" th:value="${param.no}" name = "itemno" readonly>
+        <img th:src="@{/img/default.png}" style="width: 50px;" height="50px" id="img"/>
+        <input type="file" name="file" onchange="changeImage(this)"/>
+        <input type="submit" value="이미지등록"/>
+    </form>
+
+    <table>
+        <tbody>
+            <tr th:each="obj : ${list}">
+                <td><img th:src="@{/seller/image(no=${obj.no})}" style="width: 100px;" height="100px"/>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        const changeImage = (e) =>{
+            if(e.files.length>0){
+                img.src=URL.createObjectURL(e.files[0]);
+            }
+            else{
+                img.src='[[@{/img/default.png}]]';
+            }
+        };
+    </script>
+</body>
+</html>
