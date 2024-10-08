@@ -23,7 +23,7 @@ import java.util.*;
 @RestController
 @RequestMapping(value = "/api/freeboard1")
 @RequiredArgsConstructor
-public class FreeBoard1Controller {
+public class FreeBoard1RestController {
 
     final FreeBoard1Repository fb1Repository;
 
@@ -37,6 +37,19 @@ public class FreeBoard1Controller {
             if (no > 0) {
                 FreeBoard1Projection obj = fb1Repository.findByNo(no);
                 if (obj != null) {
+                    //이전글 가져오기
+                    FreeBoard1Projection prev = fb1Repository.findTop1ByNoLessThanOrderByNoDesc(no);
+                    map.put("prev", 0);
+                    if(prev != null){
+                        map.put("prev", prev.getNo());
+                    }
+
+                    //다음글 가져오기
+                    FreeBoard1Projection next = fb1Repository.findTop1ByNoGreaterThanOrderByNoAsc(no);
+                    map.put("next", 0);
+                    if(next != null){
+                        map.put("next", next.getNo());
+                    }
                     map.put("result", obj);
                     map.put("status", 200);
                 }

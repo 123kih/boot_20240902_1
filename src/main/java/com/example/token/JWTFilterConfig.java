@@ -15,10 +15,12 @@ public class JWTFilterConfig {
         FilterRegistrationBean<JWTFilter> filterReg = new FilterRegistrationBean<>();
         filterReg.setFilter(jwtFilter);
 
-        //아래의 3개만 필터 작동
+        //아래의 필터만 작동
         filterReg.addUrlPatterns("/api/member1/update.json" ,
                                 "/api/member1/updatepw.json" ,
-                                "/api/member1/delete.json");
+                                "/api/member1/delete.json",
+                                "/api/member1/selectone.json",
+                                "/api/memberaddress1/*" );
         return filterReg;
     }
 

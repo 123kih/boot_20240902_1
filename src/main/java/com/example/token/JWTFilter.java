@@ -55,13 +55,15 @@ public class JWTFilter extends OncePerRequestFilter{
                 response.getWriter().write(json);
                 return ;
             }
-
+            
             Claims claims = jwtUtil.validate(token);
-            String tokenID =(String) claims.get("ID");
+            //토큰에서 정보 꺼내기(로그인시에 토큰에 포함된 내용만)
+            String tokenID   = (String)claims.get("ID");
+            String tokenROLE = (String)claims.get("ROLE");
 
-            //컨트롤러에서 사용하기 위해 세션에 ID 저장
+            //REST컨트롤러에서 사용하기 위해 세션에 ID및 권한 저장
             request.getSession().setAttribute("ID", tokenID);
-
+            request.getSession().setAttribute("ROLE", tokenROLE);
             //doFilter가 실행되어야 controller로 진입할 수있음.
             filterChain.doFilter(request, response);
         }

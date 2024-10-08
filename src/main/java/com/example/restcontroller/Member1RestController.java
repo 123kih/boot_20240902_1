@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.entity.Member1;
+import com.example.entity.Member1Projection;
 import com.example.repository.Member1Repository;
 import com.example.token.JWTUtil;
 
@@ -18,6 +19,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 
@@ -30,6 +32,26 @@ public class Member1RestController {
     BCryptPasswordEncoder bcpe = new BCryptPasswordEncoder();
     final JWTUtil jwtUtil;
     final HttpSession httpSession;
+
+    //JWTFilter.java 를 실행하여 토큰의 유효성 검증 후 이 위치로 이동
+    //회원정보조회 (로그인완료된 상태) => 127.0.0.1:8080/ROOT/api/member1/selectone.json
+    //토큰 => 세션(ID)에서 꺼내서 사용
+    @GetMapping(value = "/selectone.json")
+    public Map<String,Object> selectOne(){
+        Map<String, Object> map = new HashMap<>();
+        try{
+            String uId   = (String) httpSession.getAttribute("ID");
+            String uRole = (String) httpSession.getAttribute("ROLE");
+
+            Member1Projection obj = member1Repository.findByIdAndRole(uId, uRole);
+            
+            map.put("status", 200);
+            map.put("result", obj);
+        }catch(Exception e){
+            map.put("status", -1);
+        }
+        return map;
+    }
 
     //정보변경 (로그인완료) => filter 통과 후 => 127.0.0.1:8080/ROOT/api/member1/update.json
     //const body = {name, phone, age } + token(아이디, 권한이 포함되어 있음)

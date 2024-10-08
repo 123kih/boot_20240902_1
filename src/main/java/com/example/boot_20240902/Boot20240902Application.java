@@ -11,8 +11,13 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 
 //컨트롤러 위치 설정
-@ComponentScan(basePackages = {"com.example.controller" , "com.example.restcontroller" ,
-								"com.example.security", "com.example.token"})
+@ComponentScan(basePackages = {
+	"com.example.controller" ,
+	"com.example.restcontroller" ,
+	"com.example.security",
+	"com.example.token",
+	"com.example.service"
+})
 
 //매퍼 위치 설정
 @MapperScan(basePackages = {"com.example.mapper"})

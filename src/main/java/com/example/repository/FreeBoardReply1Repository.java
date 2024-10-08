@@ -16,5 +16,6 @@ public interface FreeBoardReply1Repository extends JpaRepository<FreeBoardReply1
     //나머지는 만들어서 사용해야함.
 
     //쿼리문(mybatis) : SELECT * FROM freeboardreply1 WHERE bno = #{bno}
+    //https://docs.spring.io/spring-data/jpa/docs/2.7.10/reference/html/#jpa.query-methods.query-creation
     List<FreeBoardReply1> findByBno_no(int no);
 }
