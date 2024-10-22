@@ -27,6 +27,29 @@ public class AdminController {
     
     final Restaurant2Repository r2Repository;
 
+    @PostMapping(value = "/restaurant_update.do")
+    public String updatePOST(@ModelAttribute Restaurant2 obj) {
+        System.out.println(obj.toString());
+        
+        //1. 기존내용을 DB에서 읽음
+        Restaurant2 ret = r2Repository.findById(obj.getCrNumber()).orElse(null);
+        //2. 전달된 내용을 기존내용에 변경
+        ret.setName(obj.getName());
+        ret.setPhone(obj.getPhone());
+        ret.setAddress(obj.getAddress());
+        //3. 기존내용을 다시 저장
+        r2Repository.save(ret);
+        
+        return "redirect:/admin/home.do?menu=1";    
+    }
+    
+    @PostMapping(value = "/restaurant_delete.do")
+    public String deletePOST(@RequestParam(name="crNumber") String crNumber) {
+        System.out.println(crNumber);
+        r2Repository.deleteById(crNumber);
+        return "redirect:/admin/home.do?menu=1 ";
+    }
+    
     @PostMapping(value = "/restaurant_insert.do")
     public String insertPOST(@ModelAttribute Restaurant2 obj) {
         try{

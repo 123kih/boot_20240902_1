@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>식당 로그인</title>
+</head>
+<body>
+    <h3>식당 로그인</h3>
+    <form th:action="@{/restaurant2/login.do}" method="post">
+        <input type="text" placeholder="사업자번호" name="crNumber"/>
+        <input type="password" placeholder="암호" name="password"/>
+        <button>로그인</button>
+    </form>
+</body>
+</html>

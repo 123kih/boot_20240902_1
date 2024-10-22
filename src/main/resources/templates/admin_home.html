@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,57 +7,80 @@
 </head>
 
 <body>
-    <h3>관리자용 홈</h3>
-    <div th:if="${menu == 1 }">
+    <h3>관리자홈</h3>
+
+    <div th:if="${menu == 1}">
         <form th:action="@{/admin/restaurant_insert.do}" method="post">
-            <h5>식당등록</h5>
+            <h4>식당등록</h4>
             <div>
-                <label style="display: inline-block; width: 150px;">사업자번호 : </label>
+                <label style="display: inline-block; width:150px">사업자번호 : </label>
                 <input type="text" name="crNumber" placeholder="000-00-00000" />
             </div>
             <div>
-                <label style="display: inline-block; width: 150px;">상호명 : </label>
+                <label style="display: inline-block; width:150px">상호명 : </label>
                 <input type="text" name="name" placeholder="상호명" />
             </div>
             <div>
-                <label style="display: inline-block; width: 150px;">연락처 : </label>
+                <label style="display: inline-block; width:150px">연락처 : </label>
                 <input type="text" name="phone" placeholder="연락처" />
             </div>
             <div>
-                <label style="display: inline-block; width: 150px;">주소 : </label>
+                <label style="display: inline-block; width:150px">주소 : </label>
                 <input type="text" name="address" placeholder="주소" />
             </div>
             <div>
-                <label style="display: inline-block; width: 150px;">임시암호 : </label>
+                <label style="display: inline-block; width:150px">임시암호 : </label>
                 <input type="text" name="password" value="1234" />
             </div>
             <div>
                 <button type="submit">식당등록</button>
             </div>
         </form>
+
         <hr />
         <table border="1">
-            <tr th:each="obj : ${list}">
+            <tr th:each="obj ,idx : ${list}">
+                <form th:action="@{/admin/restaurant_delete.do}" method="post" class="form">
                 <td th:text="${obj.crNumber}"></td>
-                <td th:text="${obj.name}"></td>
-                <td th:text="${obj.phone}"></td>
-                <td th:text="${obj.address}"></td>
+                <td> <input type="text" name = "name" th:value = "${obj.name}"/> </td>
+                <td> <input type="text" name = "phone" th:value = "${obj.phone}"/> </td>
+                <td> <input type="text" name = "address" th:value = "${obj.address}"/> </td>
                 <td th:text="${obj.regdate}"></td>
                 <td>
-                    <button>삭제</button>
-                    <button>변경</button>
+                    <input type="hidden" name="crNumber" th:value="${obj.crNumber}" />
+                    <button type="button" th:onclick="handleDelete([[${idx.index}]])">삭제</button>
+                    <button type="button" th:onClick="handleUpdate([[${idx.index}]])">변경</button>
                 </td>
-            </tr>
+                </form>
+            </tr>    
         </table>
 
         <th:block th:each="page : ${#numbers.sequence(1, pages)}">
-            <a th:href="@{/admin/home.do(menu=1,page=${page})}"><button th:text="${page}"></button></a>
+            <a th:href="@{/admin/home.do(menu=1,page=${page})}"><button th:text="${page}"></button></a>                
         </th:block>
     </div>
 
     <div th:if="${menu == 2}">
         <h5>임시</h5>
     </div>
+    <script th:inline="javascript">
+
+        const handleUpdate = (idx) => {
+            if(confirm('변경할까요?')){
+                const form = document.getElementsByClassName('form'); //n개 가져옴
+                form[idx].action = /*[[@{/admin/restaurant_update.do}]]*/"";
+                form[idx].submit();
+            }
+        };
+        
+        const handleDelete = (idx) => {
+            if(confirm('삭제할까요?')){
+                const form = document.getElementsByClassName('form'); //n개 가져옴
+                form[idx].action = /*[[@{/admin/restaurant_delete.do}]]*/"";
+                form[idx].submit();
+            }
+        };
+    </script>
 </body>
 
 </html>

@@ -34,7 +34,7 @@ public class LoginHandler implements AuthenticationSuccessHandler{
                 response.sendRedirect(request.getContextPath()+"/seller/home.do");
             }
             else if(strRole.equals("ROLE_ADMIN")){
-                response.sendRedirect(request.getContextPath()+"admin/home.do");
+                response.sendRedirect(request.getContextPath()+"/admin/home.do");
             }
             else{
                 //127.0.0.1:8080/ROOT/home.do

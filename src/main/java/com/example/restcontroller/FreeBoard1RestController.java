@@ -193,13 +193,17 @@ public class FreeBoard1RestController {
     public Map<String, Object> insertPOST(@ModelAttribute FreeBoard1 obj,
             @RequestParam(name = "file") MultipartFile file) {
         Map<String, Object> map = new HashMap<>();
+        
         try {
+            if(file!=null){
             System.out.println(obj.toString());
             System.out.println(file.getOriginalFilename());
             obj.setFilename(file.getOriginalFilename());
             obj.setFilesize(file.getSize());
             obj.setFiletype(file.getContentType());
             obj.setFiledata(file.getBytes());
+            }
+            
             obj.setHit(1);
 
             fb1Repository.save(obj);

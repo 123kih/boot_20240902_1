@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>식당홈</title>
+</head>
+<body>
+    <h3>식당홈</h3>
+
+    <form th:action="@{/restaurant2/logout.do}" method="post">
+        <button>로그아웃</button>
+    </form>
+
+    <hr/>
+
+    <form  th:action="@{/restaurant2/insert_menu.do}" method="post">
+        <input type="text" placeholder="메뉴명" name="name"/>
+        <input type="text" placeholder="가격" name="price"/>
+        <select  name="catecode">
+            <option th:each = "obj : ${list}" th:text = "${obj.name}" th:value = "${obj.code}"> </option>
+        </select>
+        <button type="submit">등록</button>
+    </form>
+    
+    <table>
+        <tbody>
+            <tr th:each = "obj , idx : ${list1}">
+                <form th:action = "@{/restaurant2/delete_menu.do}" method="post" class="form">
+                    <td th:text = "${obj.no}"></td>
+                    <td th:text = "${obj.name}"></td>
+                    <td th:text = "${obj.price}"></td>
+                    <td th:text = "${obj.cate.name}"></td>
+                    <td th:text = "${obj.regdate}"></td>
+                    <td>
+                        <input type="hidden" name="no" th:value = "${obj.no}"/>
+                        <button type="button" th:onClick ="handleDelete([[${idx.index}]])">삭제</button>
+                    </td>
+                </form>
+            </tr>
+        </tbody>
+    </table>
+
+    <script th:inline="javascript">
+        const handleDelete = (idx) => {
+            if(confirm('삭제할까요?')){
+                const form = document.getElementsByClassName('form');
+                form[idx].action = /*[[@{/restaurant2/menu_delete.do}]]*/"";
+                form[idx].submit();
+            }
+        };
+    </script>
+</body>
+</html>
