@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.example.entity.Category2;
+import com.example.entity.Chat2;
 import com.example.entity.Menu2;
 import com.example.entity.Restaurant2;
 import com.example.repository.Category2Repository;
+import com.example.repository.Chat2Repository;
 import com.example.repository.Menu2Repository;
 import com.example.repository.Restaurant2Repository;
 
@@ -33,6 +35,20 @@ public class Restaurant2Controller {
     final Restaurant2Repository r2Repository;
     final Menu2Repository m2Repository;
     final HttpSession httpSession;
+    final Chat2Repository ct2Repository;
+
+    //127.0.0.1:8080/ROOT/restaurant2/chat.do
+    @GetMapping(value = "/chat.do")
+    public String chat(Model model) {
+        //판매자가 bbb인 것으로 설정
+        String recv = "bbb";
+        List<Chat2> list = ct2Repository.findByRecvOrderByNoDesc(recv);
+        System.out.println(list.toString());
+        model.addAttribute("list",list);
+        // resources /templates/ chat.html
+        return "chat";
+    }
+    
 
     @PostMapping(value = "/menu_delete.do")
     public String menuDeletePOST(@RequestParam (name = "no") int no) {

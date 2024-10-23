@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>판매자용 채팅</title>
+</head>
+<body>
+    <h3>판매자용 채팅</h3>
+
+    보내는사람 : <input type="text" value="bbb" id="send"/>
+    받는 사람 : <input type="text" id="recv"/>
+    보낼 메세지 : <input type="text" id="msg"/>
+    <button onclick="sendMessage()">보내기</button>
+    
+    <hr/>
+
+    <table border="1">
+        <tbody>
+            <tr th:each = "obj : ${list}">
+                <td th:text = "${obj.no}"></td>
+                <td th:text = "${obj.send}"></td>
+                <td th:text = "${obj.recv}"></td>
+                <td th:text = "${obj.msg}"></td>
+                <td th:text = "${obj.regdate}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+    <script>
+        // console.log(window);
+        let client = null;
+        
+        const option = {
+            clean           : true , //세션 초기화
+            reconnectPeriod : 2000 , //주기적인 접속 유지 시간(ping) 2초
+            clientId        : 'id206_' + new Date().getTime(), //클라이언트 아이디(고유해야함)
+            username        : 'aaa', //broker 접속 아이디
+            password        : 'bbb' //broker 접속 암호 
+        };
+
+        const topic = 'bsit/class403/#'; // 토픽(받는 메세지의 필터 기능)
+        const url = `ws://175.126.37.21:11884`;
+        try{
+            client = mqtt.connect(url, {option})
+
+            client.on('connect',() =>{ //접속성공
+                console.log('broker connect success');
+            });
+
+            client.on('error',() =>{ //접속실패
+                console.log('broker connect error');
+            });
+
+            client.subscribe(topic, { qos:0 } , (error,res) =>{
+                if(error){
+                    console.log('subscribe error => ',error);
+                }
+                else{
+                    console.log('subscribe success =>' , res);
+                }
+            });
+
+            client.on('message',(topic, message) =>{ //메세지가 왔을 때
+                console.log(topic , JSON.parse(message))
+                //원래는 정확한 데이터를 꺼냄
+                window.location.reload();
+            });
+
+            console.log(client);
+        }catch(e){
+            console.log('mqtt error => ' , e)
+        }
+
+        const sendMessage = async() => {
+            const msg = document.getElementById('msg');
+            const recv = document.getElementById('recv');
+            const send = document.getElementById('send');
+            
+            //1. DB에 자료 추가
+            const headers = {"Content-Type" : "application/json"};
+            const url = `/ROOT/api/chat2/insert.json`;
+            const body = {"send" : "aaa" , "recv" : "bbb" , "msg" : msg.value}; //이미지, 동영상 ,음악... 을 DB에 저장
+            
+            // {status : 200 , result : 추가 했던 번호}
+            const {data} = await axios.post(url,body,{headers});
+            
+            if(data.status ===200){
+                //2. 통지할 사용자에게 메세지를 전달(DB에 있는 정보를 조회할 수 있는)
+                
+                //3. 받은 사용자는 DB에서 꺼냄
+                
+                //전송할 내용들
+                const payload = JSON.stringify({
+                    'send' : send.value,
+                    'recv' : recv.value,
+                    'msg' : msg.value
+                });
+                client.publish('bsit/class403/bbb' , payload , 0, error => {
+                    if(error){
+                        console.log('publish error => ',error);
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>
